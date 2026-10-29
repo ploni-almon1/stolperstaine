@@ -57,17 +57,31 @@ body {
 
 /* ── Ikony na mapě ── */
 .stone-icon {
-  background: #d4af37; border: 2px solid #fff; border-radius: 50%;
-  width: 18px !important; height: 18px !important; box-shadow: 0 0 6px rgba(0,0,0,0.5);
+  background: #d4af37; /* Výchozí zlatá, když je přepínač vypnutý */
+  border: 2px solid #fff;
+  border-radius: 50%;
+  width: 18px !important; height: 18px !important; 
+  box-shadow: 0 0 6px rgba(0,0,0,0.5);
 }
 .stone-icon.recently-cleaned { background: #27ae60; }   /* 🟢 zelená */
 .stone-icon.medium           { background: #e67e22; }   /* 🟠 oranžová */
-.stone-icon.needs-cleaning   { background: #e74c3c; animation: pulse 2s infinite; } /* 🔴 červená */
+.stone-icon.needs-cleaning   { background: #e74c3c; }   /* 🔴 červená (bez pulzování) */
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.25); opacity: 0.7; }
+/* ── Štítek se stavem v detailu ── */
+.status-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-left: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
 }
+.status-badge.green  { background: #27ae60; color: #fff; }
+.status-badge.orange { background: #e67e22; color: #fff; }
+.status-badge.red    { background: #e74c3c; color: #fff; }
 
 /* ── Vlastní tlačítko polohy jako Leaflet control ── */
 .locate-btn-custom {
