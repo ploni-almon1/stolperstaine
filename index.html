@@ -9,14 +9,14 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
-  <!-- ODKAZ NA STYLE.CSS -->
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="styles.css?v=10" />
 </head>
 <body>
 
   <header id="app-header">
     <h1>🪨 Stolpersteine</h1>
     <div class="controls">
+      <!-- ZDE JE ZMĚNA: odstraněno "checked" -->
       <label class="switch">
         <input type="checkbox" id="toggle-cleaning" />
         <span>Stav čištění</span>
@@ -53,8 +53,6 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  
-  <!-- ODKAZ NA MAIN.JS -->
-  <script src="main.js"></script>
+  <script src="app.js?v=10"></script>
 </body>
 </html>
