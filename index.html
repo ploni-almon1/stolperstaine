@@ -5,13 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Stolpersteine Mapa</title>
 
-  <!-- Knihovny pro mapu (CSS) -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
-  <!-- Náš vlastní styl -->
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=4" />
 </head>
 <body>
 
@@ -25,11 +23,9 @@
     </div>
   </header>
 
-  <button id="locate-btn" title="Moje poloha">◎</button>
-
   <div id="map"></div>
 
-  <!-- Detailní panel (vysouvací zespodu) -->
+  <!-- Detailní panel -->
   <aside id="detail-panel">
     <button id="close-detail">✕</button>
     <img id="detail-photo" src="" alt="Fotografie kamene" />
@@ -41,12 +37,15 @@
     <form id="cleaning-form">
       <h3>Zaznamenat čištění</h3>
       <div class="form-row">
-        <label for="cleaning-date">Datum:</label>
-        <input type="date" id="cleaning-date" />
-      </div>
-      <div class="form-row">
-        <label for="cleaning-text">Nebo ručně:</label>
-        <input type="text" id="cleaning-text" placeholder="DD.MM.RRRR" maxlength="10" inputmode="numeric" />
+        <label for="cleaning-text">Datum:</label>
+        <input
+          type="text"
+          id="cleaning-text"
+          placeholder="DD.MM.RRRR"
+          maxlength="10"
+          inputmode="numeric"
+          autocomplete="off"
+        />
       </div>
       <button type="submit" id="cleaning-submit">Uložit</button>
       <span id="cleaning-feedback" class="feedback hidden"></span>
@@ -55,11 +54,9 @@
     <a id="detail-link" href="#" target="_blank">Zobrazit plný profil →</a>
   </aside>
 
-  <!-- Knihovny pro mapu (JS) -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
-  <!-- Náš vlastní skript -->
-  <script src="app.js?v=3"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>
