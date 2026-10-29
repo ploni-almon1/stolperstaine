@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
-  <link rel="stylesheet" href="styles.css?v=6" />
+  <link rel="stylesheet" href="styles.css?v=7" />
 </head>
 <body>
 
@@ -19,6 +19,11 @@
       <label class="switch">
         <input type="checkbox" id="toggle-cleaning" checked />
         <span>Stav čištění</span>
+      </label>
+      <!-- Nový přepínač pro květiny -->
+      <label class="switch">
+        <input type="checkbox" id="toggle-flower" checked />
+        <span>Květiny 🌸</span>
       </label>
       <label class="switch">
         <input type="checkbox" id="toggle-grayscale" />
@@ -37,11 +42,12 @@
     <p id="detail-address"></p>
     <p id="detail-bio"></p>
     
-    <!-- Zde se bude zobrazovat datum a nový barevný štítek se stavem -->
+    <!-- Zde se zobrazuje datum čištění a nový stav pro květinu -->
     <p id="detail-cleaned"></p>
+    <p id="detail-flower"></p>
 
     <form id="cleaning-form">
-      <h3>Zaznamenat čištění</h3>
+      <h3>Zaznamenat návštěvu</h3>
       <div class="form-row">
         <label for="cleaning-text">Datum:</label>
         <input
@@ -53,6 +59,16 @@
           autocomplete="off"
         />
       </div>
+      <!-- Nová volba akce: čištění vs. květina -->
+      <div class="form-actions" style="margin-bottom: 10px; display: flex; gap: 15px; font-size: 0.9em;">
+        <label>
+          <input type="checkbox" id="action-cleaned" checked /> Vyčištěno ✨
+        </label>
+        <label>
+          <input type="checkbox" id="action-flower" /> Položen květ 🌸
+        </label>
+      </div>
+      
       <button type="submit" id="cleaning-submit">Uložit</button>
       <span id="cleaning-feedback" class="feedback hidden"></span>
     </form>
@@ -63,6 +79,6 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
-  <script src="app.js?v=6"></script>
+  <script src="app.js?v=7"></script>
 </body>
 </html>
