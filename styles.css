@@ -27,7 +27,7 @@ body {
 
 #map { flex: 1; width: 100%; z-index: 1; }
 
-/* ── Vysouvací panel ── */
+/* Panel */
 #detail-panel {
   position: fixed;
   bottom: 0; left: 0; right: 0;
@@ -55,56 +55,38 @@ body {
 #detail-panel p { font-size: 0.9rem; margin-bottom: 8px; color: #ccc; }
 #detail-panel a { color: #d4af37; font-weight: 600; text-decoration: none; display: block; margin-top: 12px; }
 
-/* ── Ikony na mapě ── */
+/* Ikony */
 .stone-icon {
-  background: #d4af37; /* Výchozí zlatá, když je přepínač vypnutý */
+  background: #d4af37;
   border: 2px solid #fff;
   border-radius: 50%;
   width: 18px !important; height: 18px !important; 
   box-shadow: 0 0 6px rgba(0,0,0,0.5);
 }
-.stone-icon.recently-cleaned { background: #27ae60; }   /* 🟢 zelená */
-.stone-icon.medium           { background: #e67e22; }   /* 🟠 oranžová */
-.stone-icon.needs-cleaning   { background: #e74c3c; }   /* 🔴 červená (bez pulzování) */
+.stone-icon.recently-cleaned { background: #27ae60; }
+.stone-icon.medium           { background: #e67e22; }
+.stone-icon.needs-cleaning   { background: #e74c3c; }
 
-/* ── Štítek se stavem v detailu ── */
+/* Štítek v detailu */
 .status-badge {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  margin-left: 8px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  vertical-align: middle;
+  display: inline-block; padding: 2px 8px; border-radius: 12px;
+  font-size: 0.75rem; font-weight: 700; margin-left: 8px;
+  text-transform: uppercase; vertical-align: middle;
 }
 .status-badge.green  { background: #27ae60; color: #fff; }
 .status-badge.orange { background: #e67e22; color: #fff; }
 .status-badge.red    { background: #e74c3c; color: #fff; }
 
-/* ── Vlastní tlačítko polohy jako Leaflet control ── */
+/* Tlačítko polohy */
 .locate-btn-custom {
-  width: 34px !important;
-  height: 34px !important;
-  background: #1a1a1a;
-  border: 2px solid #d4af37;
-  border-radius: 4px;
-  color: #d4af37;
-  font-size: 1.15rem;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.15s ease;
-  padding: 0;
-  line-height: 1;
+  width: 34px !important; height: 34px !important;
+  background: #1a1a1a; border: 2px solid #d4af37; border-radius: 4px;
+  color: #d4af37; font-size: 1.15rem; font-weight: bold; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
 }
 .locate-btn-custom:hover { background: #262626; color: #fff; }
-.locate-btn-custom:active { background: #0d0d0d; }
 
-/* ── Formulář ── */
+/* Formulář */
 #cleaning-form { margin-top: 16px; padding-top: 16px; border-top: 1px solid #333; }
 #cleaning-form h3 { font-size: 0.95rem; color: #d4af37; margin-bottom: 10px; }
 .form-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
@@ -112,7 +94,6 @@ body {
 .form-row input {
   flex: 1; padding: 8px 10px; background: #0f0f0f; border: 1px solid #333;
   border-radius: 6px; color: #f0f0f0; font-size: 0.95rem; letter-spacing: 1px;
-  font-family: inherit;
 }
 .form-row input:focus { outline: none; border-color: #d4af37; }
 .form-row input.invalid { border-color: #e74c3c; background: #1f1010; }
@@ -120,8 +101,6 @@ body {
   margin-top: 6px; padding: 9px 20px; background: #d4af37; color: #111;
   border: none; border-radius: 6px; font-weight: 700; cursor: pointer;
 }
-#cleaning-submit:hover { background: #e6c24b; }
 .feedback { margin-left: 12px; font-size: 0.85rem; font-weight: 600; }
 .feedback.hidden { display: none; }
-
 body.panel-open .leaflet-top.leaflet-left { display: none; }
