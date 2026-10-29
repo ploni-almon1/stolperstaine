@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stolpersteine Mapa</title>
+
+  <!-- Knihovny pro mapu (CSS) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+
+  <!-- Náš vlastní styl -->
+  <link rel="stylesheet" href="styles.css?v=3" />
+</head>
+<body>
+
+  <header id="app-header">
+    <h1>🪨 Stolpersteine</h1>
+    <div class="controls">
+      <label class="switch">
+        <input type="checkbox" id="toggle-grayscale" />
+        <span>Černobílá</span>
+      </label>
+    </div>
+  </header>
+
+  <button id="locate-btn" title="Moje poloha">◎</button>
+
+  <div id="map"></div>
+
+  <!-- Detailní panel (vysouvací zespodu) -->
+  <aside id="detail-panel">
+    <button id="close-detail">✕</button>
+    <img id="detail-photo" src="" alt="Fotografie kamene" />
+    <h2 id="detail-name"></h2>
+    <p id="detail-address"></p>
+    <p id="detail-bio"></p>
+    <p id="detail-cleaned"></p>
+
+    <form id="cleaning-form">
+      <h3>Zaznamenat čištění</h3>
+      <div class="form-row">
+        <label for="cleaning-date">Datum:</label>
+        <input type="date" id="cleaning-date" />
+      </div>
+      <div class="form-row">
+        <label for="cleaning-text">Nebo ručně:</label>
+        <input type="text" id="cleaning-text" placeholder="DD.MM.RRRR" maxlength="10" inputmode="numeric" />
+      </div>
+      <button type="submit" id="cleaning-submit">Uložit</button>
+      <span id="cleaning-feedback" class="feedback hidden"></span>
+    </form>
+
+    <a id="detail-link" href="#" target="_blank">Zobrazit plný profil →</a>
+  </aside>
+
+  <!-- Knihovny pro mapu (JS) -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+  <!-- Náš vlastní skript -->
+  <script src="app.js?v=3"></script>
+</body>
+</html>
