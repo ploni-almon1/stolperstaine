@@ -1,0 +1,189 @@
+// 1. DATA (Zde si upravíš své kameny)
+const stolpersteine = [
+  { 
+    id: 1, name: "Anna Franková", address: "Náměstí Míru 12, Praha", 
+    lat: 50.0755, lng: 14.4378, photo: "https://picsum.photos/seed/1/200/150", 
+    bio: "Narodila se 12. 5. 1900. Deportována do Terezína.", 
+    link: "https://example.com", lastCleaned: "2024-11-15" 
+  },
+  { 
+    id: 2, name: "Josef Novák", address: "Vinohradská 44, Praha", 
+    lat: 50.0780, lng: 14.4450, photo: "https://picsum.photos/seed/2/200/150", 
+    bio: "Obchodník, zahynul v roce 1942.", 
+    link: "https://example.com", lastCleaned: "2023-02-10" 
+  }
+];
+
+// 2. POMOCNÉ FUNKCE PRO DATUM
+function formatCz(iso) {
+  if (!iso) return '';
+  const [y, m, d] = iso.split('-');
+  return `${d}.${m}.${y}`;
+}
+
+function toIso(d) {
+  const pad = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+}
+
+function parseCzechDate(str) {
+  if (!str) return null;
+  const m = str.trim().match(/^(\d{1,2})\.\s?(\d{1,2})\.\s?(\d{4})$/);
+  if (!m) return null;
+  const [, d, mo, y] = m;
+  const date = new Date(+y, +mo - 1, +d);
+  if (date.getFullYear() !== +y || date.getMonth() !== +mo - 1 || date.getDate() !== +d) return null;
+  if (date > new Date()) return null;
+  return date;
+}
+
+// Zjistí barvu podle data
+function getCleaningStatus(dateStr) {
+  if (!dateStr) return "needs-cleaning";
+  const then = new Date(dateStr);
+  const now = new Date();
+  const months = (now.getFullYear() - then.getFullYear()) * 12 + (now.getMonth() - then.getMonth());
+  if (months <= 3) return "recently-cleaned";
+  if (months >= 6) return "needs-cleaning";
+  return ""; // Neutrální zlatá
+}
+
+// 3. INICIALIZACE MAPY
+const map = L.map('map').setView([50.08, 14.44], 14);
+const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap',
+  className: 'map-tiles'
+}).addTo(map);
+
+const markersGroup = L.markerClusterGroup().addTo(map);
+
+// 4. VYKRESLENÍ BODŮ
+function renderMarkers() {
+  markersGroup.clearLayers();
+  stolpersteine.forEach(stone => {
+    const statusClass = getCleaningStatus(stone.lastCleaned);
+    const icon = L.divIcon({
+      className: '',
+      html: `<div class="stone-icon ${statusClass}"></div>`,
+      iconSize: [18, 18],
+      iconAnchor: [9, 9]
+    });
+    const marker = L.marker([stone.lat, stone.lng], { icon }).addTo(markersGroup);
+    
+    // Po kliknutí na bod otevřeme detail
+    marker.on('click', () => openDetail(stone));
+  });
+}
+
+// 5. DETAILNÍ PANEL
+const panel = document.getElementById('detail-panel');
+const dateInput = document.getElementById('cleaning-date');
+const textInput = document.getElementById('cleaning-text');
+const feedback = document.getElementById('cleaning-feedback');
+let currentStone = null;
+
+function openDetail(stone) {
+  currentStone = stone;
+  
+  document.getElementById('detail-photo').src = stone.photo;
+  document.getElementById('detail-name').textContent = stone.name;
+  document.getElementById('detail-address').textContent = '📍 ' + stone.address;
+  document.getElementById('detail-bio').textContent = stone.bio;
+  document.getElementById('detail-link').href = stone.link;
+  
+  const statusText = getCleaningStatus(stone.lastCleaned) === 'needs-cleaning' ? ' (potřebuje očistit!)' : '';
+  document.getElementById('detail-cleaned').textContent = '🧹 Naposledy čištěno: ' + (formatCz(stone.lastCleaned) || 'nikdy') + statusText;
+
+  dateInput.value = stone.lastCleaned || '';
+  textInput.value = formatCz(stone.lastCleaned);
+  textInput.classList.remove('invalid');
+  feedback.classList.add('hidden');
+
+  // Vysuneme panel
+  panel.classList.add('active');
+  document.body.classList.add('panel-open');
+}
+
+// Zavření panelu
+document.getElementById('close-detail').onclick = () => {
+  panel.classList.remove('active');
+  document.body.classList.remove('panel-open');
+};
+
+// 6. FORMULÁŘ (PROPOJENÍ KALENDÁŘE A TEXTU)
+dateInput.max = toIso(new Date());
+
+dateInput.addEventListener('input', () => {
+  textInput.value = formatCz(dateInput.value);
+  textInput.classList.remove('invalid');
+});
+
+textInput.addEventListener('input', () => {
+  const trimmed = textInput.value.trim();
+  if (!trimmed) {
+    dateInput.value = '';
+    textInput.classList.remove('invalid');
+    return;
+  }
+  const parsed = parseCzechDate(trimmed);
+  if (parsed) {
+    dateInput.value = toIso(parsed);
+    textInput.classList.remove('invalid');
+  } else if (trimmed.length >= 8) {
+    textInput.classList.add('invalid');
+  } else {
+    textInput.classList.remove('invalid');
+  }
+});
+
+// Odeslání formuláře
+document.getElementById('cleaning-form').onsubmit = (e) => {
+  e.preventDefault();
+  if (!currentStone) return;
+
+  const iso = dateInput.value;
+  if (!iso || new Date(iso) > new Date()) {
+    feedback.textContent = '⚠ Zadejte platné datum';
+    feedback.style.color = '#e74c3c';
+    feedback.classList.remove('hidden');
+    return;
+  }
+
+  // Uložíme nové datum
+  currentStone.lastCleaned = iso;
+  document.getElementById('detail-cleaned').textContent = '🧹 Naposledy čištěno: ' + formatCz(iso);
+  
+  // Zobrazíme zelenou zprávu
+  feedback.textContent = '✓ Uloženo';
+  feedback.style.color = '#27ae60';
+  feedback.classList.remove('hidden');
+  setTimeout(() => feedback.classList.add('hidden'), 2500);
+
+  // Překreslíme mapu, aby tečka změnila barvu
+  renderMarkers(); 
+};
+
+// 7. OVLÁDACÍ PRVKY (ČERNOBÍLÁ, POLOHA)
+document.getElementById('toggle-grayscale').onchange = (e) => {
+  const tiles = document.querySelectorAll('.map-tiles');
+  tiles.forEach(t => {
+    t.style.filter = e.target.checked ? 'grayscale(100%) contrast(110%)' : 'none';
+  });
+};
+
+document.getElementById('locate-btn').onclick = () => {
+  map.locate({ setView: true, maxZoom: 16, enableHighAccuracy: true });
+};
+
+map.on('locationfound', (e) => {
+  L.circleMarker(e.latlng, { 
+    color: '#3498db', fillColor: '#3498db', fillOpacity: 1, radius: 8, weight: 3 
+  }).addTo(map).bindPopup("📍 Jste zde").openPopup();
+});
+
+map.on('locationerror', () => {
+  alert("Polohu nelze zjistit. Povolte přístup k poloze v nastavení prohlížeče.");
+});
+
+// Spuštění při načtení
+renderMarkers();
