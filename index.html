@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
-  <link rel="stylesheet" href="styles.css?v=7" />
+  <link rel="stylesheet" href="styles.css?v=8" />
 </head>
 <body>
 
@@ -29,28 +29,19 @@
 
   <div id="map"></div>
 
-  <!-- Detailní panel -->
   <aside id="detail-panel">
     <button id="close-detail">✕</button>
     <img id="detail-photo" src="" alt="Fotografie kamene" />
     <h2 id="detail-name"></h2>
     <p id="detail-address"></p>
     <p id="detail-bio"></p>
-    
     <p id="detail-cleaned"></p>
 
     <form id="cleaning-form">
       <h3>Zaznamenat čištění</h3>
       <div class="form-row">
         <label for="cleaning-text">Datum:</label>
-        <input
-          type="text"
-          id="cleaning-text"
-          placeholder="DD.MM.RRRR"
-          maxlength="10"
-          inputmode="numeric"
-          autocomplete="off"
-        />
+        <input type="text" id="cleaning-text" placeholder="DD.MM.RRRR" maxlength="10" inputmode="numeric" autocomplete="off" />
       </div>
       <button type="submit" id="cleaning-submit">Uložit</button>
       <span id="cleaning-feedback" class="feedback hidden"></span>
@@ -61,7 +52,6 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-
-  <script src="app.js?v=7"></script>
+  <script src="app.js?v=8"></script>
 </body>
 </html>
